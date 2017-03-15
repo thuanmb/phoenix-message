@@ -1,0 +1,54 @@
+@import '~StylesPath/color';
+@import '~StylesPath/mixin';
+
+.header {
+  position: fixed;
+  top: 0;
+  text-align: left;
+  width: 100%;
+  background-color: $white;
+  z-index: 90;
+  padding: 5px 20px;
+
+  @include mobile-view{
+    padding: 5px 0;
+  };
+
+  &__title{
+    margin: 0 0 0 100px;
+    font-size: 28px;
+    font-weight: 500;
+    padding: 20px 0;
+    @include mobile-view{
+      display: none;
+    };
+  }
+  &__logo{
+    color: $mobile-header-color;
+    font-size: 20px;
+    vertical-align: middle;
+    text-decoration: none;
+    margin-top: 10px;
+    span{
+      font-weight: 300;
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 25px;
+      color: $pink;
+    }
+  }
+  &__avatar{
+    padding: 10px 0;
+    vertical-align: middle;
+    float: right;
+  }
+
+  &__image{
+    width: 35px;
+    height: 35px;
+    background: asset-url("imgs/icon.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+

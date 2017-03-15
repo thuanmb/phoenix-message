@@ -6,6 +6,7 @@ import './vendor/vendor';
 import './vendor/vendor-style';
 import './styles/phoenix-message';
 import './init';
+import './imgs';
 
 const Root = ({ store }) =>
   <Provider store={store}>

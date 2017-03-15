@@ -24,6 +24,7 @@ gem 'pundit', '~> 1.1'
 gem 'rails_admin', '~> 1.0'
 gem 'multi_json'
 gem 'faker'
+gem 'devise'
 
 group :development do
   gem 'better_errors'

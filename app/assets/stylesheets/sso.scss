@@ -1,0 +1,63 @@
+@import 'helpers';
+
+$mobile_max_width: 720px;
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.sso-bg {
+  min-height: 100%;
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.65),
+      rgba(0, 0, 0, 0.65)
+    ),
+
+    image-url('bg-landscape.jpeg');
+  background-size: 100%;
+
+  @media (max-width: $mobile_max_width) {
+    background:
+      linear-gradient(
+        rgba(0, 0, 0, 0.45),
+        rgba(0, 0, 0, 0.45)
+      ),
+      image-url('bg-portrait.jpeg');
+
+    background-size: 100%;
+  }
+
+  .sso-container {
+    text-align: center;
+    padding-top: 150px;
+    padding-left: 20%;
+    padding-right: 20%;
+
+    @media (max-width: $mobile_max_width) {
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+
+    h2, label, em {
+      color: #fff;
+    }
+
+    a {
+      color: #CD5A91;
+    }
+
+    form {
+      text-align: left;
+
+      .field {
+        margin-top: 10px;
+      }
+    }
+
+    .link-container {
+      margin-top: 20px;
+    }
+  }
+}
