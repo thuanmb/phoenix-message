@@ -79,6 +79,7 @@ module.exports = (env = {}) => {
     context: __dirname,
     entry: [
       './main.jsx',
+      'whatwg-fetch',
     ],
 
     output: {

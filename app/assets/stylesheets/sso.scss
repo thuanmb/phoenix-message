@@ -29,6 +29,18 @@ html, body {
     background-size: 100%;
   }
 
+  .sso-ads {
+    position: relative;
+    top: 150px;
+    color: #fff;
+    text-align: center;
+
+    .btn {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+
   .sso-container {
     text-align: center;
     padding-top: 150px;
@@ -38,9 +50,10 @@ html, body {
     @media (max-width: $mobile_max_width) {
       padding-left: 5%;
       padding-right: 5%;
+      padding-bottom: 60px;
     }
 
-    h2, label, em {
+    h2, h1, label, em {
       color: #fff;
     }
 
@@ -58,6 +71,17 @@ html, body {
 
     .link-container {
       margin-top: 20px;
+    }
+
+    .form-container {
+      margin-top: 20px;
+      padding: 30px 50px;
+      border: 1px solid #fff;
+      border-radius: 3px;
+
+      @media (max-width: $mobile_max_width) {
+        padding: 50px 10px;
+      }
     }
   }
 }

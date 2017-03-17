@@ -1,6 +1,8 @@
 @import '~StylesPath/color';
 @import '~StylesPath/mixin';
 
+$avatar_size: 35px;
+
 .header {
   position: fixed;
   top: 0;
@@ -9,6 +11,7 @@
   background-color: $white;
   z-index: 90;
   padding: 5px 20px;
+
 
   @include mobile-view{
     padding: 5px 0;
@@ -38,9 +41,26 @@
     }
   }
   &__avatar{
-    padding: 10px 0;
     vertical-align: middle;
     float: right;
+
+    .btn {
+      padding: 2px;
+      width: $avatar_size;
+      height: $avatar_size;
+      border: 2px solid $blue_main;
+      border-radius: $avatar_size;
+
+      &:hover {
+        border-color: $pink;
+      }
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: $avatar_size;
+    }
   }
 
   &__image{
