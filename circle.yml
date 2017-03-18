@@ -5,8 +5,11 @@ dependencies:
 deployment:
   staging:
     branch: master
-    heroku:
-      appname: phoenixmessage
+    commands:
+      - git fetch --unshallow
+      - git push git@heroku.com:phoenixmessage.git master:master
+      - heroku run rake db:migrate cache:clear --app phoenixmessage
+      - heroku restart --app phoenixmessage
 test:
   override:
     - bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml --format progress:
