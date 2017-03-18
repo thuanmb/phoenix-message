@@ -9,7 +9,7 @@ class HeaderContainer extends Component {
     fetch('/users/sign_out', {
       method: 'DELETE',
     }).then(() => {
-       window.location.href = 'users/sign_in';
+      window.location.href = 'users/sign_in';
     });
   }
 
