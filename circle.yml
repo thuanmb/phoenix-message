@@ -1,0 +1,31 @@
+deployment:
+  production:
+    branch: master
+    commands:
+      - git fetch --unshallow
+      - git push git@heroku.com:phoenixmessage.git master:master
+      - heroku run rake db:migrate cache:clear
+      - heroku restart
+  override:
+    - bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml --format progress:
+        parallel: true
+        files:
+          - spec/**/*_spec.rb
+        parallel: true
+    - ./script/it-runner.sh:
+        parallel: true
+        timeout: 7200
+        files:
+          - features/**/*.feature
+machine:
+  node:
+    version: 6.9.2
+  pre:
+    - cd /tmp && wget https://chromedriver.storage.googleapis.com/2.20/chromedriver_linux32.zip
+    - cd /tmp && unzip chromedriver_linux32.zip
+    - sudo mv -f /tmp/chromedriver `which chromedriver`
+  post:
+    - pkill chromedriver; $HOME/bin/./chromedriver:
+        background: true
+  services:
+      - elasticsearch
