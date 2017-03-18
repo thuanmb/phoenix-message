@@ -3,13 +3,10 @@ dependencies:
     - gem uninstall bundler
     - gem install bundler --pre
 deployment:
-  production:
+  staging:
     branch: master
-    commands:
-      - git fetch --unshallow
-      - git push git@heroku.com:phoenixmessage.git master:master
-      - heroku run rake db:migrate cache:clear
-      - heroku restart
+    heroku:
+      appname: phoenixmessage
 test:
   override:
     - bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml --format progress:
