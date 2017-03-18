@@ -249,7 +249,6 @@ GEM
     minitest (5.10.1)
     multi_json (1.12.1)
     multi_test (0.1.2)
-    mysql2 (0.3.21)
     nenv (0.3.0)
     nested_form (0.3.2)
     nokogiri (1.7.0.1)
@@ -261,6 +260,7 @@ GEM
     parallel (1.11.1)
     parallel_tests (2.14.0)
       parallel
+    pg (0.19.0)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -479,7 +479,7 @@ DEPENDENCIES
   launchy
   memoist
   multi_json
-  mysql2 (~> 0.3.18)
+  pg (~> 0.18)
   pundit (~> 1.1)
   rails (= 4.2.7)
   rails-erd
