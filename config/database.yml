@@ -1,0 +1,24 @@
+login: &login
+  url:  <%= ENV["CLEARDB_DATABASE_URL"] || "mysql2://root:password@localhost" %>
+  pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
+  encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
+
+development:
+  database: phoenix_message_development
+  <<: *login
+
+test: &test
+  database: phoenix_message_test
+  <<: *login
+
+cucumber:
+  <<: *test
+
+production:
+  database: phoenix_message_production
+  <<: *login
+
+staging:
+  database: phoenix_message_staging
+  <<: *login
