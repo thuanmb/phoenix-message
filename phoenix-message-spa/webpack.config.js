@@ -184,12 +184,12 @@ module.exports = (env = {}) => {
       disable: false,
       allChunks: true,
     }));
-    config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+    // config.plugins.push(new webpack.optimize.UglifyJsPlugin());
     config.plugins.push(new webpack.optimize.AggressiveMergingPlugin());
   } else {
     config.module.rules.push(styleConfigDevelopment);
-    babelConfig.plugins.unshift('react-hot-loader/babel');
-    config.entry.unshift('react-hot-loader/patch', 'webpack-dev-server/client?http://localhost:3001', 'webpack/hot/only-dev-server');
+    // babelConfig.plugins.unshift('react-hot-loader/babel');
+    // config.entry.unshift('react-hot-loader/patch', 'webpack-dev-server/client?http://localhost:3001', 'webpack/hot/only-dev-server');
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
     config.plugins.push(new webpack.NoEmitOnErrorsPlugin());
     config.plugins.push(new webpack.NamedModulesPlugin());

@@ -1,0 +1,20 @@
+@import '~StylesPath/mixin';
+
+.message {
+  font-family: 'Cormorant Garamond', serif;
+
+  p, li {
+    font-family: fantasy;
+  }
+
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 20px;
+
+  @include mobile-view {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 5px;
+  }
+}
+

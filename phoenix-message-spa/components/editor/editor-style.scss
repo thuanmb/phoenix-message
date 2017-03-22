@@ -1,0 +1,15 @@
+@import '~StylesPath/mixin';
+
+.editor {
+  ul {
+    list-style: none;
+
+    li {
+      @include mobile-view{
+        padding: 5px 10px;
+        min-width: 50px;
+      };
+    }
+  }
+}
+

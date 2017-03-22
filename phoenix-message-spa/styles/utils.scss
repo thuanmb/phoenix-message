@@ -1,5 +1,6 @@
 @import './mixin';
 @import './color';
+@import './variables';
 
 /* MARGINS & PADDINGS */
 @include createPaddingMargin();
@@ -56,6 +57,10 @@
   }
 }
 
+.block {
+  display: block !important;
+}
+
 .no-mouse {
   pointer-events: none;
 }
@@ -86,6 +91,10 @@
 
 .text-error {
   color: $red;
+}
+
+.text-deeppink {
+  color: deeppink;
 }
 
 .icon-grey {
@@ -131,6 +140,10 @@
   padding: 40px 20px;
 }
 
+.p-20 {
+  padding: 20px;
+}
+
 .nowrap {
   white-space: nowrap;
 }
@@ -143,6 +156,16 @@
   float: right;
 }
 
+.l-relative {
+  position: relative;
+}
+
+/* BACKGROUNDS */
+
+.bg-grey {
+  background-color: $grey;
+}
+
 .bg-green-light {
   background-color: $greenlight;
 }
@@ -150,6 +173,37 @@
   background-color: $greenbold;
 }
 
-.l-relative {
-  position: relative;
+.bg-cyan {
+  background-color: $cyan;
+}
+
+.bg-grey-3 {
+  background-color: $grey-3;
+}
+/* BORDERS */
+
+.b-white-l {
+  border-left: $border_white;
+}
+
+.b-white-r {
+  border-right: $border_white;
+}
+
+.b-rad-7 {
+  border-radius: 7px;
+}
+
+/* SIZES */
+.min-w-120 {
+  min-width: 120px;
+}
+
+/* BUTTONS */
+.btn-action {
+  cursor: pointer;
+
+  &:hover {
+    color: $light-pink;
+  }
 }

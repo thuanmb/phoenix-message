@@ -1,8 +1,7 @@
-import Spinner, { SpinnerAwarenessComponent } from './spinner/spinner';
 import Searcher from './searcher/searcher';
+import Avatar from './avatar/avatar';
 
 export {
-  Spinner,
   Searcher,
-  SpinnerAwarenessComponent,
+  Avatar,
 };

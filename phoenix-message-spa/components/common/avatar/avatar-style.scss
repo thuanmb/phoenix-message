@@ -1,0 +1,21 @@
+@import '~StylesPath/color';
+
+$avatar_size: 35px;
+#gravatar-dropdown {
+  padding: 2px;
+  width: $avatar_size;
+  height: $avatar_size;
+  border: 2px solid $blue_main;
+  border-radius: $avatar_size;
+
+  &:hover {
+    border-color: $pink;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: $avatar_size;
+  }
+}
+

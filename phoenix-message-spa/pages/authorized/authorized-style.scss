@@ -1,8 +1,8 @@
 @import '~StylesPath/color';
 @import '~StylesPath/mixin';
 
-.content-wrapper{
-  margin-left: 100px;
+.content-wrapper {
+  margin-left: 0;
   padding-top: 30px;
   @include mobile-view{
     padding-top: 0px;
@@ -11,5 +11,5 @@
 }
 
 .content-wrapper--show-header {
-  padding-top: 70px;
+  padding-top: 45px;
 }
