@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import './message-style';
 
 const Message = ({ editing }) => (
-  <div className={`message bg-grey-3 text-white scrollable-y ${editing ? 'message--editing' : ''}`}>
+  <div className={`message bg-grey-3 text-white scrollable-y p-t-20 p-b-20 ${editing ? 'message--editing' : ''}`}>
     <h3 className="tlt text-deeppink">
       <ul className="texts no-list-style">
         <li data-in-effect="tada" className="m-t-20">A day without you again, I miss you more and more everyday.</li>
