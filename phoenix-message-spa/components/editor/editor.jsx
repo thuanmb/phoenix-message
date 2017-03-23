@@ -21,7 +21,7 @@ const Editor = () => (
         <small>Add Youtube</small>
       </li>
     </ul>
-    <Message />
+    <Message editing />
   </div>
 );
 

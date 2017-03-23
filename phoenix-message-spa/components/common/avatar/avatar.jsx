@@ -6,7 +6,7 @@ import './avatar-style';
 
 const Avatar = ({ signOutHandler }) => (
   <ButtonToolbar>
-    <Dropdown pullRight id="gravatar-dropdown">
+    <Dropdown pullRight id="gravatar-dropdown" className="action-dropdown-btn">
       <Dropdown.Toggle noCaret>
         <Gravatar email="buimthuan@gmail.com" rating="pg" />
       </Dropdown.Toggle>

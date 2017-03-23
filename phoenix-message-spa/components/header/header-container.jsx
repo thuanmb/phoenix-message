@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { history } from 'CorePath/store';
 import 'whatwg-fetch';
+import routes from 'CorePath/routes';
 import Header from './header';
 
 class HeaderContainer extends Component {
@@ -13,9 +15,16 @@ class HeaderContainer extends Component {
     });
   }
 
+  static addMessage() {
+    history.push(routes.paths.createMessage);
+  }
+
   render() {
     return (
-      <Header signOutHandler={() => this.constructor.submitSignOut()} />
+      <Header
+        signOutHandler={() => this.constructor.submitSignOut()}
+        addMessageHandler={() => this.constructor.addMessage()}
+      />
     );
   }
 }

@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   root to: 'phoenix_message#index'
 
   mount Sidekiq::Web => '/sidekiq'
+
+  match '*a', to: 'phoenix_message#index', via: :all
 end

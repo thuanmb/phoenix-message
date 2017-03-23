@@ -3,18 +3,31 @@
 .message {
   font-family: 'Cormorant Garamond', serif;
 
+  position: absolute;
+  top: 45px;
+  bottom: 0;
+  padding: 20px;
+
   p, li {
     font-family: fantasy;
   }
 
-  margin-left: 20%;
-  margin-right: 20%;
-  padding: 20px;
+  &.message--editing {
+    top: 130px;
+  }
 
   @include mobile-view {
-    margin-left: 0;
-    margin-right: 0;
+    &.message--editing {
+      top: 100px;
+    }
+
     padding: 5px;
   }
-}
 
+  &__video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+  }
+}
