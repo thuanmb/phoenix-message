@@ -5,9 +5,8 @@ const Message = ({ editing }) => (
   <div className={`message bg-grey-3 text-white scrollable-y p-t-20 p-b-20 ${editing ? 'message--editing' : ''}`}>
     <h3 className="tlt text-deeppink">
       <ul className="texts no-list-style">
-        <li data-in-effect="tada" className="m-t-20">A day without you again, I miss you more and more everyday.</li>
-        <li data-in-effect="tada" className="m-t-20">Today, I continue to work hard to get something done for Phoenix Message.</li>
-        <li data-in-effect="tada" className="m-t-20">Tomorrow will be another hard day with you, I think. But after tomorrow will be Saturday and you can met me.</li>
+        <li data-in-effect="tada" className="m-t-20">Finally tomorrow I can meet you. I miss you so much</li>
+        <li data-in-effect="tada" className="m-t-20">Tonight I'm upset and nearly cry with my mom. I will tell you know by tomorrow</li>
         <li data-in-effect="tada" className="m-t-20">Message me and go to sleep soon, honey.</li>
         <li data-in-effect="tada" className="m-t-20">I love you!</li>
       </ul>
