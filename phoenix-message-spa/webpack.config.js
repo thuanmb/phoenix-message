@@ -171,6 +171,7 @@ module.exports = (env = {}) => {
         CorePath: path.resolve(__dirname, './core'),
         StylesPath: path.resolve(__dirname, './styles'),
         CommonComponents: path.resolve(__dirname, './components/common/common'),
+        ReducersPath: path.resolve(__dirname, './reducers'),
       },
       extensions: ['.js', '.jsx', '.scss'],
     },
