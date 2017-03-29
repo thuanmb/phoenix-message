@@ -1,3 +1,5 @@
+import { RECEIVE_MESSAGE_CREATED } from './projects-reducer';
+
 export const UPDATE_CURRENT_PROJECT = 'UPDATE_CURRENT_PROJECT';
 
 const defaultState = {
@@ -10,6 +12,12 @@ const appStateReducer = (state = defaultState, action) => {
       return {
         ...state,
         currentProject: action.projectId,
+      };
+
+    case RECEIVE_MESSAGE_CREATED:
+      return {
+        ...state,
+        currentProject: action.response.data.id,
       };
 
     default:
