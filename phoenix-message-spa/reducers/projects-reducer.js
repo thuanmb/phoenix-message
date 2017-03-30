@@ -50,8 +50,30 @@ const defaultState = {
   allIds: [1, 2, 3],
 };
 
+const getNextStateForAddingWidget = (state, projectId, widgetId, propName, data) => ({
+  ...state,
+  byId: {
+    ...state.byId,
+    [projectId]: {
+      ...state.byId[projectId],
+      widgets: [
+        ...state.byId[projectId].widgets,
+        {
+          widgetId,
+          properties: {
+            [propName]: data,
+          },
+        },
+      ],
+    },
+  },
+});
+
 export const REQUEST_CREATE_MESSAGE = 'REQUEST_CREATE_MESSAGE';
 export const RECEIVE_MESSAGE_CREATED = 'RECEIVE_MESSAGE_CREATED';
+export const ADD_TEXT_TO_MESSAGE = 'ADD_TEXT_TO_MESSAGE';
+export const ADD_IMAGE_TO_MESSAGE = 'ADD_IMAGE_TO_MESSAGE';
+export const ADD_YOUTUBE_TO_MESSAGE = 'ADD_YOUTUBE_TO_MESSAGE';
 
 const projectsReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -75,6 +97,12 @@ const projectsReducer = (state = defaultState, action) => {
           newProject.id,
         ],
       };
+    case ADD_TEXT_TO_MESSAGE:
+      return getNextStateForAddingWidget(state, action.projectId, action.widgetId, 'content', action.text);
+    case ADD_IMAGE_TO_MESSAGE:
+      return getNextStateForAddingWidget(state, action.projectId, action.widgetId, 'url', action.url);
+    case ADD_YOUTUBE_TO_MESSAGE:
+      return getNextStateForAddingWidget(state, action.projectId, action.widgetId, 'videoId', action.videoId);
     default:
       return state;
   }
