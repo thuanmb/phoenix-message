@@ -18,6 +18,10 @@ class CreateMessageContainer extends PureComponent {
     youtubeWidget: PropTypes.object,
   };
 
+  static publishMessage() {
+    window.console.log('Publish message');
+  }
+
   handleAddNewText() {
     const { addTextToMessageDispatcher, currentProject, textWidget } = this.props;
 
@@ -55,6 +59,11 @@ class CreateMessageContainer extends PureComponent {
           <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.handleAddNewYoutube()}>
             <i className="block material-icons">ondemand_video</i>
             <small>Add Youtube</small>
+          </li>
+
+          <li className="inline-block p-20 b-white-r min-w-120 btn-action bg-red" onClick={() => this.constructor.publishMessage()}>
+            <i className="block material-icons">share</i>
+            <small>Publish</small>
           </li>
         </ul>
 

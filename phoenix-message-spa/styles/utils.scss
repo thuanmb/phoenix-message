@@ -200,6 +200,11 @@
 .bg-grey-3 {
   background-color: $grey-3;
 }
+
+.bg-red {
+  background-color: $red;
+}
+
 /* BORDERS */
 
 .b-white-l {
@@ -233,6 +238,12 @@
 
   &:hover {
     color: $light-pink;
+  }
+
+  &.bg-red {
+    &:hover {
+      color: $cyan;
+    }
   }
 }
 
