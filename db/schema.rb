@@ -69,29 +69,20 @@ ActiveRecord::Schema.define(version: 20170407152954) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "widget_contents", force: :cascade do |t|
-    t.integer  "widget_id"
+  create_table "widgets", force: :cascade do |t|
+    t.integer  "message_id"
     t.integer  "asset_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "widget_contents", ["asset_id"], name: "index_widget_contents_on_asset_id", using: :btree
-  add_index "widget_contents", ["widget_id"], name: "index_widget_contents_on_widget_id", using: :btree
-
-  create_table "widgets", force: :cascade do |t|
-    t.integer  "message_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
+  add_index "widgets", ["asset_id"], name: "index_widgets_on_asset_id", using: :btree
   add_index "widgets", ["message_id"], name: "index_widgets_on_message_id", using: :btree
 
   add_foreign_key "messages", "users"
   add_foreign_key "shared_message_widgets", "shared_messages"
   add_foreign_key "shared_message_widgets", "widgets"
   add_foreign_key "shared_messages", "messages"
-  add_foreign_key "widget_contents", "assets"
-  add_foreign_key "widget_contents", "widgets"
+  add_foreign_key "widgets", "assets"
   add_foreign_key "widgets", "messages"
 end
