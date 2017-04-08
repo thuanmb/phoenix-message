@@ -20,15 +20,7 @@ class Api::V1::BaseController < ApplicationController
   end
 
   def current_user
-    current_session.user
-  end
-
-  def current_organization
-    current_session.organization
-  end
-
-  def current_permission
-    current_session.permission
+    current_session
   end
 
   private

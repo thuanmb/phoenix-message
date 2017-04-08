@@ -1,4 +1,5 @@
 require 'rspec'
+require 'spec_helper/warden'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -46,7 +47,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-
+  config.include Warden::Test::ControllerHelpers, type: :controller
 
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.

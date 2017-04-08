@@ -42,14 +42,6 @@ module PhoenixMessage
       app/models/concerns
     ].map { |path| "#{Rails.root}/#{path}" }
 
-    Warden::Manager.serialize_into_session do |current_session|
-      current_session.data
-    end
-
-    Warden::Manager.serialize_from_session do |data|
-      CurrentSession.from_data(data)
-    end
-
     config.active_job.queue_adapter = :sidekiq
   end
 end
