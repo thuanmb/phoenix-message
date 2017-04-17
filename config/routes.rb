@@ -9,8 +9,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :messages, only: [:index, :show, :create, :update] do
-      end
+      resources :messages, only: [:index, :show, :create, :update]
+      resources :widgets, only: [:create]
     end
   end
 

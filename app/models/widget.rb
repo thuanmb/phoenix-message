@@ -1,6 +1,6 @@
 class Widget < ActiveRecord::Base
   belongs_to :message
-  has_one :asset
+  belongs_to :asset
 
   validates :message, :asset, presence: true
 end
