@@ -1,7 +1,8 @@
 import React, { PropTypes, PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { Spinner } from 'CommonComponents';
 import Message from './message';
-import { addTextToMessage, addImageToMessage, addYoutubeToMessage } from './message-actions';
+import { addTextToMessage, addImageToMessage, addYoutubeToMessage, fetchMessage, updateCurrentMessageId } from './message-actions';
 
 import './editor-style';
 
@@ -9,35 +10,44 @@ class CreateMessageContainer extends PureComponent {
   static propTypes = {
     content: PropTypes.object,
     isLoading: PropTypes.bool,
-    currentProject: PropTypes.number,
+    currentMessageId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     addTextToMessageDispatcher: PropTypes.func,
     addImageToMessageDispatcher: PropTypes.func,
     addYoutubeToMessageDispatcher: PropTypes.func,
-    textWidget: PropTypes.object,
-    imageWidget: PropTypes.object,
-    youtubeWidget: PropTypes.object,
+    fetchMessageDispatcher: PropTypes.func,
+    updateCurrentMessageIdDispatcher: PropTypes.func,
+    params: PropTypes.object,
   };
 
   static publishMessage() {
     window.console.log('Publish message');
   }
 
-  handleAddNewText() {
-    const { addTextToMessageDispatcher, currentProject, textWidget } = this.props;
+  componentDidMount() {
+    const { content, fetchMessageDispatcher, updateCurrentMessageIdDispatcher, params: { id } } = this.props;
+    updateCurrentMessageIdDispatcher(id);
 
-    addTextToMessageDispatcher(currentProject, textWidget.id, 'Some text for your message');
+    if (!content.id) {
+      fetchMessageDispatcher(id);
+    }
+  }
+
+  handleAddNewText() {
+    const { addTextToMessageDispatcher, currentMessageId } = this.props;
+
+    addTextToMessageDispatcher(currentMessageId, 'Some text for your message');
   }
 
   handleAddNewImage() {
-    const { addImageToMessageDispatcher, currentProject, imageWidget } = this.props;
+    const { addImageToMessageDispatcher, currentMessageId } = this.props;
 
-    addImageToMessageDispatcher(currentProject, imageWidget.id, 'http://imageurl.com');
+    addImageToMessageDispatcher(currentMessageId, 'http://imageurl.com');
   }
 
   handleAddNewYoutube() {
-    const { addYoutubeToMessageDispatcher, currentProject, youtubeWidget } = this.props;
+    const { addYoutubeToMessageDispatcher, currentMessageId } = this.props;
 
-    addYoutubeToMessageDispatcher(currentProject, youtubeWidget.id, 'QUwxKWT6m7U');
+    addYoutubeToMessageDispatcher(currentMessageId, 'QUwxKWT6m7U');
   }
 
   render() {
@@ -61,14 +71,14 @@ class CreateMessageContainer extends PureComponent {
             <small>Add Youtube</small>
           </li>
 
-          <li className="inline-block p-20 b-white-r min-w-120 btn-action bg-red" onClick={() => this.constructor.publishMessage()}>
+          <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.constructor.publishMessage()}>
             <i className="block material-icons">share</i>
             <small>Publish</small>
           </li>
         </ul>
 
         {isLoading ? (
-          <div className="loading">Loading...</div>
+          <Spinner />
         ) : (
           <Message editing content={content} />
         )}
@@ -77,39 +87,24 @@ class CreateMessageContainer extends PureComponent {
   }
 }
 
-const getCurrentProject = (projectList, currentProjectId) => {
-  if (projectList && currentProjectId) {
-    return projectList[currentProjectId];
+const getCurrentMessage = (messageList, currentMessageId) => {
+  if (messageList && currentMessageId) {
+    return messageList[currentMessageId];
   }
 
   return {};
 };
 
-const getWidgetByType = (widgets, type) => {
-  let widget = null;
-
-  if (widgets) {
-    Object.keys(widgets).forEach((key) => {
-      if (widgets[key].type === type) {
-        widget = widgets[key];
-      }
-    });
-  }
-
-  return widget;
-};
-
-const mapStateToProps = ({ appState: { currentProject }, entities: { projects: { isLoading, byId }, widgets } }) => ({
+const mapStateToProps = ({ appState: { currentMessageId }, entities: { messages: { isLoading, byId } } }) => ({
   isLoading,
-  currentProject,
-  content: getCurrentProject(byId, currentProject),
-  textWidget: getWidgetByType(widgets.byId, 'text'),
-  imageWidget: getWidgetByType(widgets.byId, 'image'),
-  youtubeWidget: getWidgetByType(widgets.byId, 'youtube'),
+  currentMessageId,
+  content: getCurrentMessage(byId, currentMessageId),
 });
 
 export default connect(mapStateToProps, {
   addTextToMessageDispatcher: addTextToMessage,
   addImageToMessageDispatcher: addImageToMessage,
   addYoutubeToMessageDispatcher: addYoutubeToMessage,
+  fetchMessageDispatcher: fetchMessage,
+  updateCurrentMessageIdDispatcher: updateCurrentMessageId,
 })(CreateMessageContainer);

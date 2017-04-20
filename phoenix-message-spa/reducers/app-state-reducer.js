@@ -1,23 +1,21 @@
-import { RECEIVE_MESSAGE_CREATED } from './projects-reducer';
+import { RECEIVE_MESSAGE_CREATED } from './messages-reducer';
 
-export const UPDATE_CURRENT_PROJECT = 'UPDATE_CURRENT_PROJECT';
+export const UPDATE_CURRENT_MESSAGE_ID = 'UPDATE_CURRENT_MESSAGE_ID';
 
-const defaultState = {
-  currentProject: 1,
-};
+const defaultState = {};
 
 const appStateReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case UPDATE_CURRENT_PROJECT:
+    case UPDATE_CURRENT_MESSAGE_ID:
       return {
         ...state,
-        currentProject: action.projectId,
+        currentMessageId: action.messageId,
       };
 
     case RECEIVE_MESSAGE_CREATED:
       return {
         ...state,
-        currentProject: action.response.data.id,
+        currentMessageId: action.response.data.id,
       };
 
     default:

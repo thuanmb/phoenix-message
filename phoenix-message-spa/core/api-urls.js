@@ -1,19 +1,22 @@
-// import { fullApiPath } from './config';
+import { fullApiPath } from './config';
 
-// const ApiObject = (url) => {
-//  const getUrl = (params) => {
-//    let result = url;
-//    Object.keys(params).forEach((paramName) => {
-//      result = result.replace(`:${paramName}`, params[paramName]);
-//    });
-//    return result;
-//  };
-//  return {
-//    rawUrl: url,
-//    getUrl,
-//  };
-// };
+export const ApiObject = (url) => {
+  const getUrl = (params) => {
+    let result = url;
+    Object.keys(params).forEach((paramName) => {
+      result = result.replace(`:${paramName}`, params[paramName]);
+    });
+    return result;
+  };
 
-// export const ApiUrls = {
-//
-// };
+  return {
+    rawUrl: url,
+    getUrl,
+  };
+};
+
+export const ApiUrls = {
+  Messages: `${fullApiPath}/messages`,
+  ShowMessage: ApiObject(`${fullApiPath}/messages/:id`),
+  Widgets: `${fullApiPath}/widgets`,
+};

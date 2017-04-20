@@ -1,18 +1,18 @@
 import React, { PropTypes, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Message from './message';
-import { updateCurrentProject } from './message-actions';
+import { updateCurrentMessageId } from './message-actions';
 
 class SharedMessageContainer extends PureComponent {
   static propTypes = {
-    updateCurrentProjectDispatcher: PropTypes.func,
+    updateCurrentMessageIdDispatcher: PropTypes.func,
     content: PropTypes.object,
     params: PropTypes.object,
   };
 
   componentWillMount() {
-    const { params: { id }, updateCurrentProjectDispatcher } = this.props;
-    updateCurrentProjectDispatcher(id);
+    const { params: { id }, updateCurrentMessageIdDispatcher } = this.props;
+    updateCurrentMessageIdDispatcher(id);
   }
 
   render() {
@@ -23,10 +23,10 @@ class SharedMessageContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ appState: { currentProject }, entities: { projects: { byId } } }) => ({
-  content: byId[currentProject],
+const mapStateToProps = ({ appState: { currentMessageId }, entities: { messages: { byId } } }) => ({
+  content: byId[currentMessageId],
 });
 
 export default connect(mapStateToProps, {
-  updateCurrentProjectDispatcher: updateCurrentProject,
+  updateCurrentMessageIdDispatcher: updateCurrentMessageId,
 })(SharedMessageContainer);

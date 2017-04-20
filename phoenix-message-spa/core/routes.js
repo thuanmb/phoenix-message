@@ -1,7 +1,9 @@
+import { ApiObject } from './api-urls';
+
 const routes = {
   paths: {
-    createMessage: 'messages/new',
-    showMessage: 'messages/:id',
+    createMessage: ApiObject('/messages/:id/edit'),
+    showMessage: '/messages/:id',
   },
 };
 export default routes;

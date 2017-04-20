@@ -7,26 +7,26 @@ module Api
         authorize Message
 
         messages = current_user.messages
-        api_respond_ok(data: messages)
+        api_respond_ok(data: MessageRepresenter.for_collection.prepare(MessageDecorator.decorate_collection(messages)))
       end
 
       def show
         authorize @message
-        api_respond_ok(data: @message)
+        api_respond_ok(data: MessageRepresenter.prepare(MessageDecorator.decorate(@message)))
       end
 
       def create
         authorize Message
 
         message = current_user.messages.create
-        api_respond_ok(data: message)
+        api_respond_ok(data: MessageRepresenter.prepare(MessageDecorator.decorate(message)))
       end
 
       def update
         authorize @message
         @message.update_attributes(message_params)
         @message.reload
-        api_respond_ok(data: @message)
+        api_respond_ok(data: MessageRepresenter.prepare(MessageDecorator.decorate(@message)))
       end
 
       private

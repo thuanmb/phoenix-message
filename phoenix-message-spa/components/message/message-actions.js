@@ -1,51 +1,64 @@
-import { UPDATE_CURRENT_PROJECT } from 'ReducersPath/app-state-reducer';
-import { REQUEST_CREATE_MESSAGE, RECEIVE_MESSAGE_CREATED, ADD_TEXT_TO_MESSAGE, ADD_IMAGE_TO_MESSAGE, ADD_YOUTUBE_TO_MESSAGE } from 'ReducersPath/projects-reducer';
+import { UPDATE_CURRENT_MESSAGE_ID } from 'ReducersPath/app-state-reducer';
+import { REQUESTING_MESSAGE, RECEIVE_MESSAGE_CREATED } from 'ReducersPath/messages-reducer';
+import { DEFAULT_WIDGET, ADD_WIDGET, getCreateTextWidgetPayload } from 'ReducersPath/widgets-reducer';
+import { createMessage, createWidget, getMessage } from 'CorePath/api';
+import { history } from 'CorePath/store';
+import routes from 'CorePath/routes';
 
-export const updateCurrentProject = (projectId) => ({
-  type: UPDATE_CURRENT_PROJECT,
-  projectId,
+export const updateCurrentMessageId = (messageId) => ({
+  type: UPDATE_CURRENT_MESSAGE_ID,
+  messageId,
 });
 
-export const createNewProject = () => (dispatch) => {
+export const dispatchAddingMessage = (messageId, widgets, dispatch) => {
   dispatch({
-    type: REQUEST_CREATE_MESSAGE,
+    type: ADD_WIDGET,
+    payload: widgets,
   });
 
   dispatch({
     type: RECEIVE_MESSAGE_CREATED,
     response: {
       data: {
-        id: Date.now(),
-        widgets: [
-          {
-            widgetId: 1,
-            properties: {
-              content: `This is some text ${Date.now()}`,
-            },
-          },
-        ],
+        id: messageId,
+        widgets: widgets.map((widget) => widget.id),
       },
     },
   });
 };
 
-export const addTextToMessage = (projectId, widgetId, text) => ({
-  type: ADD_TEXT_TO_MESSAGE,
-  projectId,
-  widgetId,
-  text,
-});
+export const createNewMessage = () => (dispatch) => {
+  dispatch({
+    type: REQUESTING_MESSAGE,
+  });
 
-export const addImageToMessage = (projectId, widgetId, url) => ({
-  type: ADD_IMAGE_TO_MESSAGE,
-  projectId,
-  widgetId,
-  url,
-});
+  createMessage().done(({ data: messageData }) => {
+    const messageId = messageData.id;
+    createWidget(messageId, DEFAULT_WIDGET.TEXT).done(({ data }) => {
+      dispatchAddingMessage(messageId, [data], dispatch);
+      history.push(routes.paths.createMessage.getUrl({ id: messageId }));
+    });
+  });
+};
 
-export const addYoutubeToMessage = (projectId, widgetId, videoId) => ({
-  type: ADD_YOUTUBE_TO_MESSAGE,
-  projectId,
-  widgetId,
-  videoId,
-});
+export const fetchMessage = (id) => (dispatch) => {
+  dispatch({
+    type: REQUESTING_MESSAGE,
+  });
+
+  getMessage(id).then(({ data: { widgets } }) => dispatchAddingMessage(id, widgets, dispatch));
+};
+
+export const addTextToMessage = (messageId, text) => (dispatch) => {
+  createWidget(messageId, getCreateTextWidgetPayload(text)).done(({ data }) => {
+    dispatchAddingMessage(messageId, [data], dispatch);
+  });
+};
+
+export const addImageToMessage = (messageId, url) => {
+  window.console.log(messageId, url);
+};
+
+export const addYoutubeToMessage = (messageId, videoId) => {
+  window.console.log(messageId, videoId);
+};

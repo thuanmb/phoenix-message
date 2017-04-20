@@ -14,7 +14,7 @@ const Routes = (
     <Route path="/" component={App}>
       <Route component={Authorized}>
         <IndexRoute component={Home} />
-        <Route path={routes.paths.createMessage} component={CreateMessageContainer} />
+        <Route path={routes.paths.createMessage.rawUrl} component={CreateMessageContainer} />
         <Route path={routes.paths.showMessage} component={SharedMessageContainer} />
       </Route>
     </Route>

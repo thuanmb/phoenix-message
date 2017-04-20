@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import widgetsReducer from './widgets-reducer';
-import projectsReducer from './projects-reducer';
+import messagesReducer from './messages-reducer';
 
 const entities = combineReducers({
   widgets: widgetsReducer,
-  projects: projectsReducer,
+  messages: messagesReducer,
 });
 
 export default entities;

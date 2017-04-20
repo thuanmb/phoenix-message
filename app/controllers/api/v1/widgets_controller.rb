@@ -10,7 +10,7 @@ module Api
 
         authorize widget
 
-        api_respond_ok(data: WidgetRepresenter.prepare(widget))
+        api_respond_ok(data: WidgetRepresenter.prepare(WidgetDecorator.decorate(widget)))
       end
 
       private

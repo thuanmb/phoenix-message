@@ -1,5 +1,5 @@
 class WidgetRepresenter < BaseRepresenter
   property :id
-  property :message, decorator: MessageRepresenter
+  property :type
   property :asset, decorator: AssetRepresenter
 end

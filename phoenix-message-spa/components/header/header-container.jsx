@@ -1,15 +1,13 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import { history } from 'CorePath/store';
 import 'whatwg-fetch';
-import routes from 'CorePath/routes';
 import Header from './header';
-import { createNewProject } from '../message/message-actions';
+import { createNewMessage } from '../message/message-actions';
 
 class HeaderContainer extends Component {
 
   static propTypes = {
-    createNewProjectDispatcher: PropTypes.func,
+    createNewMessageDispatcher: PropTypes.func,
   };
 
   static submitSignOut() {
@@ -21,8 +19,7 @@ class HeaderContainer extends Component {
   }
 
   addMessage() {
-    this.props.createNewProjectDispatcher();
-    history.push(routes.paths.createMessage);
+    this.props.createNewMessageDispatcher();
   }
 
   render() {
@@ -40,5 +37,5 @@ const mapStateToProps = ({ user }) => ({
 });
 
 export default connect(mapStateToProps, {
-  createNewProjectDispatcher: createNewProject,
+  createNewMessageDispatcher: createNewMessage,
 })(HeaderContainer);
