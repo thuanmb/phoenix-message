@@ -1,0 +1,21 @@
+@import 'react-toolbox/lib/checkbox/theme.css';
+
+.text {
+  color: #4a4a4a;
+  font-size: 1rem;
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+.check {
+  border-color: #4a4a4a;
+  &.checked {
+    background-color: #00C26B;
+    border-color: #00C26B;
+    &::after {
+      border-color: #FFFFFF;
+    }
+  }
+}

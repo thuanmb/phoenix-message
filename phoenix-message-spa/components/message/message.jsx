@@ -1,6 +1,7 @@
 import React, { PropTypes, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import './message-style';
+import TextWidget from '../widgets/text-widget';
 
 class Message extends PureComponent {
   static propTypes = {
@@ -21,11 +22,7 @@ class Message extends PureComponent {
           switch (widget.type) {
             case 'text':
               widgetHtml = (
-                <h3 className="tlt text-deeppink" key={`widget-${widget.type}-${widgetId}`}>
-                  <ul className="texts no-list-style">
-                    <li data-in-effect="tada" className="m-t-20">{ payload.content }</li>
-                  </ul>
-                </h3>
+                <TextWidget key={`widget-${widget.type}-${widgetId}`} widgetId={widgetId} content={payload.content} />
               );
               break;
             case 'image':

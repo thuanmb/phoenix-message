@@ -21,7 +21,7 @@ export const DEFAULT_WIDGET = {
   TEXT: {
     asset_type: ASSET_TYPE.TEXT,
     payload: {
-      content: 'Some text',
+      content: 'Some text for your message',
     },
   },
   IMAGE: {

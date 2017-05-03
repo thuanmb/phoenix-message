@@ -26,20 +26,29 @@ module.exports = (env = {}) => {
     exclude: /node_modules/,
     use: ExtractTextPlugin.extract({
       fallback: 'style-loader',
-      use: [{
-        loader: 'css-loader',
-        options: {
-          sourceMap: false,
-          minimize: true,
+      use: [
+        {
+          loader: 'css-loader',
+          options: {
+            sourceMap: false,
+            minimize: true,
+          },
         },
-      }, {
-        loader: 'postcss-loader',
-      }, {
-        loader: 'sass-loader',
-        options: {
-          sourceMap: false,
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: [
+              require('postcss-cssnext'),
+            ],
+          },
         },
-      }],
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: false,
+          },
+        },
+      ],
     }),
   };
 
@@ -56,6 +65,11 @@ module.exports = (env = {}) => {
         },
       }, {
         loader: 'postcss-loader',
+        options: {
+          plugins: [
+            require('postcss-cssnext'),
+          ],
+        },
       }, {
         loader: 'sass-loader',
         options: {
@@ -63,6 +77,87 @@ module.exports = (env = {}) => {
         },
       },
     ],
+  };
+
+  const reactToolboxVariables = {
+    'color-text': '#4a4a4a',
+    '--color-accent': '#4a4a4a',
+    '--preferred-font': 'Source Sans Pro, sans-serif;',
+    '--font-size': '16px',
+    '--datepicker-primary-color': '#4a4a4a',
+    '--calendar-primary-color': '#4a4a4a',
+    '--font-weight-semi-bold': '600',
+  };
+
+  const toolboxConfigDevelopment = {
+    test: /\.css$/,
+    include: [
+      path.resolve(__dirname, './toolbox/'),
+      path.resolve(__dirname, '../node_modules/react-toolbox/'),
+    ],
+    use: [
+      {
+        loader: 'style-loader',
+      }, {
+        loader: 'css-loader',
+        options: {
+          sourceMap: true,
+          modules: true,
+          importLoaders: 1,
+          localIdentName: '[name]__[local]___[hash:base64:5]',
+        },
+      }, {
+        loader: 'postcss-loader',
+        options: {
+          plugins: () => [
+            require('postcss-import'),
+            require('postcss-cssnext')({
+              features: {
+                customProperties: {
+                  variables: reactToolboxVariables,
+                },
+              },
+            }),
+          ],
+        },
+      },
+    ],
+  };
+
+  const toolboxConfigProduction = {
+    test: /\.css$/,
+    include: [
+      path.resolve(__dirname, './toolbox/'),
+      path.resolve(__dirname, '../node_modules/react-toolbox/'),
+    ],
+    use: ExtractTextPlugin.extract({
+      fallback: 'style-loader',
+      use: [
+        {
+          loader: 'css-loader',
+          options: {
+            sourceMap: false,
+            modules: true,
+            importLoaders: 1,
+            localIdentName: '[name]__[local]___[hash:base64:5]',
+          },
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            plugins: () => [
+              require('postcss-import'),
+              require('postcss-cssnext')({
+                features: {
+                  customProperties: {
+                    variables: reactToolboxVariables,
+                  },
+                },
+              }),
+            ],
+          },
+        },
+      ],
+    }),
   };
 
   const CONSTANTS = {
@@ -180,6 +275,7 @@ module.exports = (env = {}) => {
 
   if (env.production) {
     config.module.rules.push(styleConfigProduction);
+    config.module.rules.push(toolboxConfigProduction);
     config.plugins.push(new ExtractTextPlugin({
       filename: `${CONSTANTS.outputStylePath}/phoenix-message-main.css`,
       disable: false,
@@ -189,6 +285,7 @@ module.exports = (env = {}) => {
     config.plugins.push(new webpack.optimize.AggressiveMergingPlugin());
   } else {
     config.module.rules.push(styleConfigDevelopment);
+    config.module.rules.push(toolboxConfigDevelopment);
     // babelConfig.plugins.unshift('react-hot-loader/babel');
     // config.entry.unshift('react-hot-loader/patch', 'webpack-dev-server/client?http://localhost:3001', 'webpack/hot/only-dev-server');
     config.plugins.push(new webpack.HotModuleReplacementPlugin());

@@ -1,5 +1,5 @@
 import { UPDATE_CURRENT_MESSAGE_ID } from 'ReducersPath/app-state-reducer';
-import { REQUESTING_MESSAGE, RECEIVE_MESSAGE_CREATED } from 'ReducersPath/messages-reducer';
+import { REQUESTING_MESSAGE, RECEIVE_MESSAGE_CREATED, ADD_WIDGET_INTO_MESSAGE } from 'ReducersPath/messages-reducer';
 import { DEFAULT_WIDGET, ADD_WIDGET, getCreateTextWidgetPayload } from 'ReducersPath/widgets-reducer';
 import { createMessage, createWidget, getMessage } from 'CorePath/api';
 import { history } from 'CorePath/store';
@@ -51,7 +51,16 @@ export const fetchMessage = (id) => (dispatch) => {
 
 export const addTextToMessage = (messageId, text) => (dispatch) => {
   createWidget(messageId, getCreateTextWidgetPayload(text)).done(({ data }) => {
-    dispatchAddingMessage(messageId, [data], dispatch);
+    dispatch({
+      type: ADD_WIDGET,
+      payload: [data],
+    });
+
+    dispatch({
+      type: ADD_WIDGET_INTO_MESSAGE,
+      messageId,
+      widgetId: data.id,
+    });
   });
 };
 

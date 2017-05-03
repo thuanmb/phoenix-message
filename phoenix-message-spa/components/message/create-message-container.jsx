@@ -73,7 +73,7 @@ class CreateMessageContainer extends PureComponent {
 
           <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.constructor.publishMessage()}>
             <i className="block material-icons">share</i>
-            <small>Publish</small>
+            <small>Share</small>
           </li>
         </ul>
 
