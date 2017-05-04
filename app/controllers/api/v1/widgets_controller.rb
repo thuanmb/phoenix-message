@@ -13,6 +13,14 @@ module Api
         api_respond_ok(data: WidgetRepresenter.prepare(WidgetDecorator.decorate(widget)))
       end
 
+      def update
+        widget = Widget.find(params.require(:id))
+
+        authorize widget
+
+        WidgetService.new(widget).update(params.require(:payload))
+      end
+
       private
       def asset_params
         params.require(:widget)

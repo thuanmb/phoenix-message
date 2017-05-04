@@ -93,3 +93,4 @@ app/assets/phoenix-message/*
 
 # yarn doesn't work well in heroku. Temporary disable it.
 yarn.lock
+dump.rdb
