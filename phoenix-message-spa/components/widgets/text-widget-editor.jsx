@@ -8,6 +8,7 @@ class TextWidgetProperties extends Component {
     onHide: PropTypes.func.isRequired,
     textContent: PropTypes.string,
     onSave: PropTypes.func,
+    isUpdating: PropTypes.bool.isRequired,
   };
 
   constructor(props) {
@@ -33,6 +34,7 @@ class TextWidgetProperties extends Component {
   render() {
     const {
       isShow,
+      isUpdating,
     } = this.props;
 
     return (
@@ -55,8 +57,8 @@ class TextWidgetProperties extends Component {
             />
           </FormGroup>
 
-          <Button type="submit" bsStyle="success" onClick={(e) => this.handleSaveText(e)}>
-            Save
+          <Button type="submit" bsStyle="success" onClick={(e) => this.handleSaveText(e)} disabled={isUpdating}>
+            {isUpdating ? 'Saving' : 'Save'}
           </Button>
         </form>
       </Dialog>

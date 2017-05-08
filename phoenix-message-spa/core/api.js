@@ -23,10 +23,35 @@ export const fetchDispatcher = (beforeAction, afterAction, url) => (dispatch) =>
   });
 };
 
+export const putDispatcher = (beforeAction, afterAction, url, params) => (dispatch) => {
+  const beforeActionTypes = getActionTypes(beforeAction);
+  dispatch(beforeActionTypes);
+
+  return $.ajax({
+    url,
+    type: 'PUT',
+    contentType: 'application/json',
+    data: JSON.stringify(params),
+  }).then((response) => {
+    if (response.status === 'OK') {
+      const afterActionTypes = getActionTypes(afterAction, { response });
+      dispatch(afterActionTypes);
+    }
+  });
+};
+
 export const createMessage = () => (
   $.ajax({
     url: ApiUrls.Messages,
     type: 'POST',
+    contentType: 'application/json',
+  })
+);
+
+export const getMessage = (id) => (
+  $.ajax({
+    url: ApiUrls.ShowMessage.getUrl({ id }),
+    type: 'GET',
     contentType: 'application/json',
   })
 );
@@ -43,10 +68,13 @@ export const createWidget = (messageId, widget) => (
   })
 );
 
-export const getMessage = (id) => (
+export const updateWidgetAjax = (widgetId, payload) => (
   $.ajax({
-    url: ApiUrls.ShowMessage.getUrl({ id }),
-    type: 'GET',
+    url: ApiUrls.UpdateWidgets.getUrl({ id: widgetId }),
+    type: 'PUT',
     contentType: 'application/json',
+    data: JSON.stringify({
+      payload,
+    }),
   })
 );

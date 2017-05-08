@@ -1,6 +1,7 @@
 import { UPDATE_CURRENT_MESSAGE_ID } from 'ReducersPath/app-state-reducer';
 import { REQUESTING_MESSAGE, RECEIVE_MESSAGE_CREATED, ADD_WIDGET_INTO_MESSAGE } from 'ReducersPath/messages-reducer';
-import { DEFAULT_WIDGET, ADD_WIDGET, getCreateTextWidgetPayload } from 'ReducersPath/widgets-reducer';
+import { DEFAULT_WIDGET, getCreateTextWidgetPayload } from 'ReducersPath/widgets-reducer';
+import { ADD_WIDGET } from 'ReducersPath/types';
 import { createMessage, createWidget, getMessage } from 'CorePath/api';
 import { history } from 'CorePath/store';
 import routes from 'CorePath/routes';

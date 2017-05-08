@@ -37,7 +37,7 @@ module.exports = (env = {}) => {
         {
           loader: 'postcss-loader',
           options: {
-            plugins: [
+            plugins: () => [
               require('postcss-cssnext'),
             ],
           },
@@ -66,7 +66,7 @@ module.exports = (env = {}) => {
       }, {
         loader: 'postcss-loader',
         options: {
-          plugins: [
+          plugins: () => [
             require('postcss-cssnext'),
           ],
         },

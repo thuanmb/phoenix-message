@@ -19,6 +19,7 @@ module Api
         authorize widget
 
         WidgetService.new(widget).update(params.require(:payload))
+        api_respond_ok
       end
 
       private

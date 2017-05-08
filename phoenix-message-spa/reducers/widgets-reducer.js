@@ -1,5 +1,5 @@
 import { normalize } from 'normalizr';
-import { widget } from './types';
+import { widget, ADD_WIDGET, UPDATE_WIDGET } from './types';
 
 const defaultState = {
   byId: {},
@@ -42,8 +42,6 @@ export const getCreateTextWidgetPayload = (content) => getCreateWidgetPayload(AS
 export const getCreateImageWidgetPayload = (url) => getCreateWidgetPayload(ASSET_TYPE.IMAGE, { url });
 export const getCreateYouTubeWidgetPayload = (videoId) => getCreateWidgetPayload(ASSET_TYPE.YOUTUBE, { videoId });
 
-export const ADD_WIDGET = 'ADD_WIDGET';
-
 export const getWidgetEntities = (data) => {
   const widgetsData = { widgets: data };
   const widgetsSchema = { widgets: [widget] };
@@ -65,6 +63,20 @@ const widgetsReducer = (state = defaultState, action) => {
           ...state.allIds,
           ...normalizedWidgets.result.widgets,
         ],
+      };
+    case UPDATE_WIDGET:
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.id]: {
+            ...state.byId[action.id],
+            asset: {
+              ...state.byId[action.id].asset,
+              payload: action.payload,
+            },
+          },
+        },
       };
     default:
       return state;

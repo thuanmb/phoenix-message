@@ -1,16 +1,22 @@
 import React, { PropTypes, Component } from 'react';
+import { updateWidgetAjax } from 'CorePath/api';
+import { connect } from 'react-redux';
+import html from 'react-escape-html';
 import TextWidgetProperties from './text-widget-editor';
+import { updateWidget } from './actions';
 
 class TextWidget extends Component {
   static propTypes = {
     widgetId: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
+    updateWidgetHandler: PropTypes.func,
   };
 
   constructor() {
     super();
     this.state = {
       isEditing: false,
+      isUpdating: false,
     };
   }
 
@@ -21,8 +27,25 @@ class TextWidget extends Component {
   }
 
   onSaveText(newVal) {
-    console.log(this.props.widgetId, newVal);
-    this.onHideDialog();
+    const {
+      widgetId,
+      updateWidgetHandler,
+    } = this.props;
+    const payload = { content: newVal };
+
+    this.setState({
+      isUpdating: true,
+    });
+
+    updateWidgetAjax(widgetId, payload).done(() => {
+      updateWidgetHandler(widgetId, payload);
+
+      this.setState({
+        isUpdating: false,
+      });
+
+      this.onHideDialog();
+    });
   }
 
   showEditForm() {
@@ -35,14 +58,22 @@ class TextWidget extends Component {
     const {
       content,
     } = this.props;
+    const reg = /\n/g;
+    let escapedContent = html`${content}`;
+    escapedContent = {
+      __html: escapedContent.__html.replace(reg, '<br>'),
+    };
 
     return (
       <div>
-        <h3 className="tlt text-deeppink" onClick={() => this.showEditForm()}>
-          { content }
-        </h3>
+        <h3
+          className="tlt text-deeppink"
+          onClick={() => this.showEditForm()}
+          dangerouslySetInnerHTML={escapedContent}
+        />
         <TextWidgetProperties
           isShow={this.state.isEditing}
+          isUpdating={this.state.isUpdating}
           onHide={() => this.onHideDialog()}
           textContent={content}
           onSave={(newVal) => this.onSaveText(newVal)}
@@ -52,4 +83,6 @@ class TextWidget extends Component {
   }
 }
 
-export default TextWidget;
+export default connect(null, {
+  updateWidgetHandler: updateWidget,
+})(TextWidget);
