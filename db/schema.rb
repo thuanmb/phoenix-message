@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20170407152954) do
 
   create_table "shared_messages", force: :cascade do |t|
     t.integer  "message_id"
+    t.string   "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

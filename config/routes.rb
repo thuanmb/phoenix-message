@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :messages, only: [:index, :show, :create, :update]
       resources :widgets, only: [:create, :update]
+      resources :shared_messages, only: [:show, :create]
     end
   end
 
