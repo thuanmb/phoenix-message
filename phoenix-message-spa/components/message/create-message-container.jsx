@@ -12,16 +12,10 @@ class CreateMessageContainer extends PureComponent {
     isLoading: PropTypes.bool,
     currentMessageId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     addTextToMessageDispatcher: PropTypes.func,
-    addImageToMessageDispatcher: PropTypes.func,
-    addYoutubeToMessageDispatcher: PropTypes.func,
     fetchMessageDispatcher: PropTypes.func,
     updateCurrentMessageIdDispatcher: PropTypes.func,
     params: PropTypes.object,
   };
-
-  static publishMessage() {
-    window.console.log('Publish message');
-  }
 
   componentDidMount() {
     const { content, fetchMessageDispatcher, updateCurrentMessageIdDispatcher, params: { id } } = this.props;
@@ -38,6 +32,10 @@ class CreateMessageContainer extends PureComponent {
     addTextToMessageDispatcher(currentMessageId, 'Some text for your message');
   }
 
+  publishMessage() {
+    window.console.log('Publish message');
+  }
+
   render() {
     const { content, isLoading } = this.props;
 
@@ -49,7 +47,7 @@ class CreateMessageContainer extends PureComponent {
             <small>Add Text</small>
           </li>
 
-          <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.constructor.publishMessage()}>
+          <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.publishMessage()}>
             <i className="block material-icons">share</i>
             <small>Share</small>
           </li>
@@ -81,8 +79,6 @@ const mapStateToProps = ({ appState: { currentMessageId }, entities: { messages:
 
 export default connect(mapStateToProps, {
   addTextToMessageDispatcher: addTextToMessage,
-  addImageToMessageDispatcher: addImageToMessage,
-  addYoutubeToMessageDispatcher: addYoutubeToMessage,
   fetchMessageDispatcher: fetchMessage,
   updateCurrentMessageIdDispatcher: updateCurrentMessageId,
 })(CreateMessageContainer);
