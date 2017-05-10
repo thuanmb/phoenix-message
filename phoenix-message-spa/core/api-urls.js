@@ -20,4 +20,5 @@ export const ApiUrls = {
   ShowMessage: ApiObject(`${fullApiPath}/messages/:id`),
   Widgets: `${fullApiPath}/widgets`,
   UpdateWidgets: ApiObject(`${fullApiPath}/widgets/:id`),
+  SharedMessages: `${fullApiPath}/shared_messages`,
 };

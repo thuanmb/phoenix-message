@@ -12,7 +12,7 @@ module Api
         shared_message.save!
         shared_message.create_shared_message_widgets
         @message.update_attribute(:shared, true)
-        api_respond_ok(data: api_v1_shared_message_url(id: shared_message.token))
+        api_respond_ok(data: "#{root_url}shared_messages/#{shared_message.token}")
       end
 
       def show

@@ -1,5 +1,5 @@
+import Humps from 'humps';
 import { ApiUrls } from './api-urls';
-
 
 const getActionTypes = (actions, payload) => (
   actions instanceof Array ?
@@ -76,5 +76,16 @@ export const updateWidgetAjax = (widgetId, payload) => (
     data: JSON.stringify({
       payload,
     }),
+  })
+);
+
+export const createSharedMessage = (messageId) => (
+  $.ajax({
+    url: ApiUrls.SharedMessages,
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(Humps.decamelizeKeys({
+      messageId,
+    })),
   })
 );

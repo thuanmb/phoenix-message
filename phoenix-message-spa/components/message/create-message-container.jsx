@@ -2,7 +2,13 @@ import React, { PropTypes, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { Spinner } from 'CommonComponents';
 import Message from './message';
-import { addTextToMessage, addImageToMessage, addYoutubeToMessage, fetchMessage, updateCurrentMessageId } from './message-actions';
+import ShareMessagePopover from './share-message-popover';
+import {
+  addTextToMessage,
+  fetchMessage,
+  updateCurrentMessageId,
+  publishMessage,
+} from './message-actions';
 
 import './editor-style';
 
@@ -14,8 +20,17 @@ class CreateMessageContainer extends PureComponent {
     addTextToMessageDispatcher: PropTypes.func,
     fetchMessageDispatcher: PropTypes.func,
     updateCurrentMessageIdDispatcher: PropTypes.func,
+    publishMessageDispatcher: PropTypes.func,
     params: PropTypes.object,
+    sharedMessage: PropTypes.object,
   };
+
+  constructor() {
+    super();
+    this.state = {
+      isSharingMessage: false,
+    };
+  }
 
   componentDidMount() {
     const { content, fetchMessageDispatcher, updateCurrentMessageIdDispatcher, params: { id } } = this.props;
@@ -26,18 +41,37 @@ class CreateMessageContainer extends PureComponent {
     }
   }
 
+  onHideDialog() {
+    this.setState({
+      isSharingMessage: false,
+    });
+  }
+
   handleAddNewText() {
     const { addTextToMessageDispatcher, currentMessageId } = this.props;
 
     addTextToMessageDispatcher(currentMessageId, 'Some text for your message');
   }
 
-  publishMessage() {
-    window.console.log('Publish message');
+  handlePublishMessage() {
+    const {
+      publishMessageDispatcher,
+      currentMessageId,
+      } = this.props;
+
+    publishMessageDispatcher(currentMessageId);
+
+    this.setState({
+      isSharingMessage: true,
+    });
   }
 
   render() {
-    const { content, isLoading } = this.props;
+    const {
+      content,
+      isLoading,
+      sharedMessage,
+    } = this.props;
 
     return (
       <div className="editor">
@@ -47,7 +81,7 @@ class CreateMessageContainer extends PureComponent {
             <small>Add Text</small>
           </li>
 
-          <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.publishMessage()}>
+          <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.handlePublishMessage()}>
             <i className="block material-icons">share</i>
             <small>Share</small>
           </li>
@@ -58,6 +92,13 @@ class CreateMessageContainer extends PureComponent {
         ) : (
           <Message editing content={content} />
         )}
+
+        <ShareMessagePopover
+          isShow={this.state.isSharingMessage}
+          isCreating={sharedMessage.isLoading}
+          onHide={() => this.onHideDialog()}
+          sharedMessageUrl={sharedMessage.url}
+        />
       </div>
     );
   }
@@ -71,14 +112,16 @@ const getCurrentMessage = (messageList, currentMessageId) => {
   return {};
 };
 
-const mapStateToProps = ({ appState: { currentMessageId }, entities: { messages: { isLoading, byId } } }) => ({
+const mapStateToProps = ({ appState: { currentMessageId, sharedMessage }, entities: { messages: { isLoading, byId } } }) => ({
   isLoading,
   currentMessageId,
   content: getCurrentMessage(byId, currentMessageId),
+  sharedMessage,
 });
 
 export default connect(mapStateToProps, {
   addTextToMessageDispatcher: addTextToMessage,
   fetchMessageDispatcher: fetchMessage,
   updateCurrentMessageIdDispatcher: updateCurrentMessageId,
+  publishMessageDispatcher: publishMessage,
 })(CreateMessageContainer);

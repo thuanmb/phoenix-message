@@ -1,10 +1,14 @@
 import { UPDATE_CURRENT_MESSAGE_ID } from 'ReducersPath/app-state-reducer';
 import { REQUESTING_MESSAGE, RECEIVE_MESSAGE_CREATED, ADD_WIDGET_INTO_MESSAGE } from 'ReducersPath/messages-reducer';
 import { DEFAULT_WIDGET, getCreateTextWidgetPayload } from 'ReducersPath/widgets-reducer';
-import { ADD_WIDGET } from 'ReducersPath/types';
-import { createMessage, createWidget, getMessage } from 'CorePath/api';
+import { createMessage, createWidget, getMessage, createSharedMessage } from 'CorePath/api';
 import { history } from 'CorePath/store';
 import routes from 'CorePath/routes';
+import {
+  ADD_WIDGET,
+  REQUEST_CREATE_SHARED_MESSAGE,
+  RECEIVE_CREATE_SHARED_MESSAGE,
+} from 'ReducersPath/types';
 
 export const updateCurrentMessageId = (messageId) => ({
   type: UPDATE_CURRENT_MESSAGE_ID,
@@ -71,4 +75,15 @@ export const addImageToMessage = (messageId, url) => {
 
 export const addYoutubeToMessage = (messageId, videoId) => {
   window.console.log(messageId, videoId);
+};
+
+export const publishMessage = (messageId) => (dispatch) => {
+  dispatch({
+    type: REQUEST_CREATE_SHARED_MESSAGE,
+  });
+
+  createSharedMessage(messageId).done((response) => dispatch({
+    type: RECEIVE_CREATE_SHARED_MESSAGE,
+    url: response.data,
+  }));
 };
