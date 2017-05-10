@@ -38,18 +38,6 @@ class CreateMessageContainer extends PureComponent {
     addTextToMessageDispatcher(currentMessageId, 'Some text for your message');
   }
 
-  handleAddNewImage() {
-    const { addImageToMessageDispatcher, currentMessageId } = this.props;
-
-    addImageToMessageDispatcher(currentMessageId, 'http://imageurl.com');
-  }
-
-  handleAddNewYoutube() {
-    const { addYoutubeToMessageDispatcher, currentMessageId } = this.props;
-
-    addYoutubeToMessageDispatcher(currentMessageId, 'QUwxKWT6m7U');
-  }
-
   render() {
     const { content, isLoading } = this.props;
 
@@ -59,16 +47,6 @@ class CreateMessageContainer extends PureComponent {
           <li className="inline-block p-20 b-white-r b-white-l min-w-120 btn-action" onClick={() => this.handleAddNewText()}>
             <i className="block material-icons">title</i>
             <small>Add Text</small>
-          </li>
-
-          <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.handleAddNewImage()}>
-            <i className="block material-icons">photo</i>
-            <small>Add Photo</small>
-          </li>
-
-          <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.handleAddNewYoutube()}>
-            <i className="block material-icons">ondemand_video</i>
-            <small>Add Youtube</small>
           </li>
 
           <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.constructor.publishMessage()}>
