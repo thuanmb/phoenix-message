@@ -10,6 +10,7 @@ class TextWidget extends Component {
     widgetId: PropTypes.number.isRequired,
     content: PropTypes.string.isRequired,
     updateWidgetHandler: PropTypes.func,
+    allowEdit: PropTypes.bool.isRequired,
   };
 
   constructor() {
@@ -49,9 +50,11 @@ class TextWidget extends Component {
   }
 
   showEditForm() {
-    this.setState({
-      isEditing: true,
-    });
+    if (this.props.allowEdit) {
+      this.setState({
+        isEditing: true,
+      });
+    }
   }
 
   render() {

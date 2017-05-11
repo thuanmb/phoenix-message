@@ -1,28 +1,27 @@
 import React, { PropTypes, PureComponent } from 'react';
-import { connect } from 'react-redux';
 import './message-style';
 import TextWidget from '../widgets/text-widget';
 
 class Message extends PureComponent {
   static propTypes = {
     editing: PropTypes.bool,
-    content: PropTypes.object,
-    widgetList: PropTypes.object,
+    widgets: PropTypes.array,
+    publish: PropTypes.bool,
   };
 
   render() {
-    const { editing, widgetList, content } = this.props;
+    const { editing, widgets, publish } = this.props;
     return (
-      <div className={`message bg-grey-3 text-white scrollable-y p-t-20 p-b-20 ${editing ? 'message--editing' : ''}`}>
-        {content.widgets.map((widgetId) => {
+      <div className={`message bg-grey-3 text-white scrollable-y p-t-20 p-b-20 ${editing ? 'message--editing' : ''} ${publish ? 'message--publish' : ''}`}>
+        {widgets.map((widget) => {
           let widgetHtml;
-          const widget = widgetList[widgetId];
+          const widgetId = widget.id;
           const payload = widget.asset.payload;
 
           switch (widget.type) {
             case 'text':
               widgetHtml = (
-                <TextWidget key={`widget-${widget.type}-${widgetId}`} widgetId={widgetId} content={payload.content} />
+                <TextWidget key={`widget-${widget.type}-${widgetId}`} widgetId={widgetId} content={payload.content} allowEdit={editing} />
               );
               break;
             case 'image':
@@ -48,8 +47,4 @@ class Message extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ entities: { widgets: { byId } } }) => ({
-  widgetList: byId,
-});
-
-export default connect(mapStateToProps)(Message);
+export default Message;

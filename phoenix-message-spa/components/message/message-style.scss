@@ -22,6 +22,10 @@
     top: 130px;
   }
 
+  &.message--publish {
+    top: 0;
+  }
+
   @include mobile-view {
     &.message--editing {
       top: 100px;

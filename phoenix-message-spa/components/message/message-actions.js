@@ -1,13 +1,16 @@
 import { UPDATE_CURRENT_MESSAGE_ID } from 'ReducersPath/app-state-reducer';
 import { REQUESTING_MESSAGE, RECEIVE_MESSAGE_CREATED, ADD_WIDGET_INTO_MESSAGE } from 'ReducersPath/messages-reducer';
 import { DEFAULT_WIDGET, getCreateTextWidgetPayload } from 'ReducersPath/widgets-reducer';
-import { createMessage, createWidget, getMessage, createSharedMessage } from 'CorePath/api';
+import { createMessage, createWidget, fetchDispatcher, getMessage, createSharedMessage } from 'CorePath/api';
+import { ApiUrls } from 'CorePath/api-urls';
 import { history } from 'CorePath/store';
 import routes from 'CorePath/routes';
 import {
   ADD_WIDGET,
   REQUEST_CREATE_SHARED_MESSAGE,
   RECEIVE_CREATE_SHARED_MESSAGE,
+  REQUEST_SHOW_SHARED_MESSAGE,
+  RECEIVE_SHOW_SHARED_MESSAGE,
 } from 'ReducersPath/types';
 
 export const updateCurrentMessageId = (messageId) => ({
@@ -87,3 +90,11 @@ export const publishMessage = (messageId) => (dispatch) => {
     url: response.data,
   }));
 };
+
+export const fetchSharedMessage = (token) => (dispatch) => (
+  fetchDispatcher(
+    REQUEST_SHOW_SHARED_MESSAGE,
+    RECEIVE_SHOW_SHARED_MESSAGE,
+    ApiUrls.ShowSharedMessages.getUrl({ token }),
+  )(dispatch)
+);

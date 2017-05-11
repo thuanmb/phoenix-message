@@ -23,6 +23,7 @@ class CreateMessageContainer extends PureComponent {
     publishMessageDispatcher: PropTypes.func,
     params: PropTypes.object,
     sharedMessage: PropTypes.object,
+    widgetList: PropTypes.object,
   };
 
   constructor() {
@@ -47,6 +48,15 @@ class CreateMessageContainer extends PureComponent {
     });
   }
 
+  getWidgetList() {
+    const {
+      content,
+      widgetList,
+      } = this.props;
+
+    return content.widgets.map((widgetId) => widgetList[widgetId]);
+  }
+
   handleAddNewText() {
     const { addTextToMessageDispatcher, currentMessageId } = this.props;
 
@@ -68,7 +78,6 @@ class CreateMessageContainer extends PureComponent {
 
   render() {
     const {
-      content,
       isLoading,
       sharedMessage,
     } = this.props;
@@ -90,7 +99,7 @@ class CreateMessageContainer extends PureComponent {
         {isLoading ? (
           <Spinner />
         ) : (
-          <Message editing content={content} />
+          <Message editing widgets={this.getWidgetList()} />
         )}
 
         <ShareMessagePopover
@@ -112,11 +121,26 @@ const getCurrentMessage = (messageList, currentMessageId) => {
   return {};
 };
 
-const mapStateToProps = ({ appState: { currentMessageId, sharedMessage }, entities: { messages: { isLoading, byId } } }) => ({
+const mapStateToProps = ({
+  appState: {
+    currentMessageId,
+    sharedMessage,
+  },
+  entities: {
+    messages: {
+      isLoading,
+      byId: messageList,
+    },
+    widgets: {
+      byId: widgetList,
+    },
+  },
+}) => ({
   isLoading,
   currentMessageId,
-  content: getCurrentMessage(byId, currentMessageId),
+  content: getCurrentMessage(messageList, currentMessageId),
   sharedMessage,
+  widgetList,
 });
 
 export default connect(mapStateToProps, {
