@@ -77,6 +77,10 @@
   text-align: center;
 }
 
+.text-right {
+  text-align: right;
+}
+
 .text-grey {
   color: $grey
 }
@@ -275,4 +279,9 @@
 /* List */
 .no-list-style {
   list-style: none;
+}
+
+/* Boxes */
+.ibox {
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
 }

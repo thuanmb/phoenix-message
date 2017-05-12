@@ -48,6 +48,14 @@ export const createMessage = () => (
   })
 );
 
+export const getMessages = () => (
+  $.ajax({
+    url: ApiUrls.Messages,
+    type: 'GET',
+    contentType: 'application/json',
+  })
+);
+
 export const getMessage = (id) => (
   $.ajax({
     url: ApiUrls.ShowMessage.getUrl({ id }),

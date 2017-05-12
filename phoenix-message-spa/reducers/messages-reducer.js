@@ -17,17 +17,21 @@ const messagesReducer = (state = defaultState, action) => {
       };
     case RECEIVE_MESSAGE_CREATED:
       const newProject = action.response.data;
+      const id = newProject.message.id;
 
       return {
         ...state,
         isLoading: false,
         byId: {
           ...state.byId,
-          [newProject.id]: newProject,
+          [id]: {
+            ...newProject.message,
+            widgets: newProject.widgets,
+          },
         },
         allIds: [
           ...state.allIds,
-          newProject.id,
+          id,
         ],
       };
     case ADD_WIDGET_INTO_MESSAGE:

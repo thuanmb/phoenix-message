@@ -18,7 +18,7 @@ export const updateCurrentMessageId = (messageId) => ({
   messageId,
 });
 
-export const dispatchAddingMessage = (messageId, widgets, dispatch) => {
+export const dispatchAddingMessage = (message, widgets, dispatch) => {
   dispatch({
     type: ADD_WIDGET,
     payload: widgets,
@@ -28,7 +28,7 @@ export const dispatchAddingMessage = (messageId, widgets, dispatch) => {
     type: RECEIVE_MESSAGE_CREATED,
     response: {
       data: {
-        id: messageId,
+        message,
         widgets: widgets.map((widget) => widget.id),
       },
     },
@@ -43,7 +43,11 @@ export const createNewMessage = () => (dispatch) => {
   createMessage().done(({ data: messageData }) => {
     const messageId = messageData.id;
     createWidget(messageId, DEFAULT_WIDGET.TEXT).done(({ data }) => {
-      dispatchAddingMessage(messageId, [data], dispatch);
+      dispatchAddingMessage({
+        id: messageId,
+        shared: false,
+        createdAt: new Date(),
+      }, [data], dispatch);
       history.push(routes.paths.createMessage.getUrl({ id: messageId }));
     });
   });
@@ -54,7 +58,7 @@ export const fetchMessage = (id) => (dispatch) => {
     type: REQUESTING_MESSAGE,
   });
 
-  getMessage(id).then(({ data: { widgets } }) => dispatchAddingMessage(id, widgets, dispatch));
+  getMessage(id).then(({ data }) => dispatchAddingMessage(data, data.widgets, dispatch));
 };
 
 export const addTextToMessage = (messageId, text) => (dispatch) => {
