@@ -2,13 +2,19 @@ import React, { PropTypes, Component } from 'react';
 import { Dialog } from 'react-toolbox/lib/dialog';
 import { Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
-class TextWidgetProperties extends Component {
+class WidgetEditor extends Component {
   static propTypes = {
     isShow: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
     textContent: PropTypes.string,
     onSave: PropTypes.func,
+    onRemove: PropTypes.func,
     isUpdating: PropTypes.bool.isRequired,
+    isRemoving: PropTypes.bool.isRequired,
+    controlId: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    inputType: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -31,10 +37,19 @@ class TextWidgetProperties extends Component {
     this.props.onSave(this.state.value);
   }
 
+  handleRemoveWidget() {
+    this.props.onRemove();
+  }
+
   render() {
     const {
       isShow,
       isUpdating,
+      isRemoving,
+      controlId,
+      title,
+      placeholder,
+      inputType,
     } = this.props;
 
     return (
@@ -46,13 +61,13 @@ class TextWidgetProperties extends Component {
       >
         <form>
           <FormGroup
-            controlId="messageContent"
+            controlId={controlId}
           >
-            <ControlLabel>Message content</ControlLabel>
+            <ControlLabel>{title}</ControlLabel>
             <FormControl
-              componentClass="textarea"
+              componentClass={inputType}
               value={this.state.value}
-              placeholder="Enter your message"
+              placeholder={placeholder}
               onChange={(e) => this.handleChange(e)}
             />
           </FormGroup>
@@ -60,10 +75,14 @@ class TextWidgetProperties extends Component {
           <Button type="submit" bsStyle="success" onClick={(e) => this.handleSaveText(e)} disabled={isUpdating}>
             {isUpdating ? 'Saving' : 'Save'}
           </Button>
+
+          <Button className="m-l-10" bsStyle="danger" onClick={() => this.handleRemoveWidget()} disabled={isRemoving}>
+            {isRemoving ? 'Removing' : 'Remove'}
+          </Button>
         </form>
       </Dialog>
     );
   }
 }
 
-export default TextWidgetProperties;
+export default WidgetEditor;

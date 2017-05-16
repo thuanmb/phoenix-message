@@ -22,6 +22,15 @@ module Api
         api_respond_ok
       end
 
+      def destroy
+        widget = Widget.find(params.require(:id))
+
+        authorize widget
+
+        widget.destroy
+        api_respond_ok
+      end
+
       private
       def asset_params
         params.require(:widget)

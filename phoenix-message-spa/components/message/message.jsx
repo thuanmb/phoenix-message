@@ -1,16 +1,23 @@
 import React, { PropTypes, PureComponent } from 'react';
 import './message-style';
 import TextWidget from '../widgets/text-widget';
+import ImageWidget from '../widgets/image-widget';
 
 class Message extends PureComponent {
   static propTypes = {
     editing: PropTypes.bool,
     widgets: PropTypes.array,
     publish: PropTypes.bool,
+    onRemoveWidget: PropTypes.func,
   };
 
   render() {
-    const { editing, widgets, publish } = this.props;
+    const {
+      editing,
+      widgets,
+      publish,
+      onRemoveWidget,
+    } = this.props;
     return (
       <div className={`message bg-grey-3 text-white scrollable-y p-t-20 p-b-20 ${editing ? 'message--editing' : ''} ${publish ? 'message--publish' : ''}`}>
         {widgets.map((widget) => {
@@ -21,12 +28,24 @@ class Message extends PureComponent {
           switch (widget.type) {
             case 'text':
               widgetHtml = (
-                <TextWidget key={`widget-${widget.type}-${widgetId}`} widgetId={widgetId} content={payload.content} allowEdit={editing} />
+                <TextWidget
+                  key={`widget-${widget.type}-${widgetId}`}
+                  widgetId={widgetId}
+                  content={payload.content}
+                  allowEdit={editing}
+                  onRemoveWidget={onRemoveWidget}
+                />
               );
               break;
             case 'image':
               widgetHtml = (
-                <img alt="Message" className="m-t-20 b-rad-7 gallery-image" src={payload.url} width="100%" key={`widget-${widget.type}-${widgetId}`} />
+                <ImageWidget
+                  key={`widget-${widget.type}-${widgetId}`}
+                  widgetId={widgetId}
+                  url={payload.url}
+                  allowEdit={editing}
+                  onRemoveWidget={onRemoveWidget}
+                />
               );
               break;
             case 'youtube':

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :messages, only: [:index, :show, :create, :update]
-      resources :widgets, only: [:create, :update]
+      resources :widgets, only: [:create, :update, :destroy]
       resources :shared_messages, only: [:show, :create]
     end
   end

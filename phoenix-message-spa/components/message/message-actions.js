@@ -1,6 +1,5 @@
 import { UPDATE_CURRENT_MESSAGE_ID } from 'ReducersPath/app-state-reducer';
 import { REQUESTING_MESSAGE, RECEIVE_MESSAGE_CREATED, ADD_WIDGET_INTO_MESSAGE } from 'ReducersPath/messages-reducer';
-import { DEFAULT_WIDGET, getCreateTextWidgetPayload } from 'ReducersPath/widgets-reducer';
 import { createMessage, createWidget, fetchDispatcher, getMessage, createSharedMessage } from 'CorePath/api';
 import { ApiUrls } from 'CorePath/api-urls';
 import { history } from 'CorePath/store';
@@ -11,7 +10,14 @@ import {
   RECEIVE_CREATE_SHARED_MESSAGE,
   REQUEST_SHOW_SHARED_MESSAGE,
   RECEIVE_SHOW_SHARED_MESSAGE,
+  REMOVE_WIDGET_FROM_MESSAGE,
 } from 'ReducersPath/types';
+
+import {
+  DEFAULT_WIDGET,
+  getCreateTextWidgetPayload,
+  getCreateImageWidgetPayload,
+} from 'ReducersPath/widgets-reducer';
 
 export const updateCurrentMessageId = (messageId) => ({
   type: UPDATE_CURRENT_MESSAGE_ID,
@@ -76,8 +82,19 @@ export const addTextToMessage = (messageId, text) => (dispatch) => {
   });
 };
 
-export const addImageToMessage = (messageId, url) => {
-  window.console.log(messageId, url);
+export const addImageToMessage = (messageId, url) => (dispatch) => {
+  createWidget(messageId, getCreateImageWidgetPayload(url)).done(({ data }) => {
+    dispatch({
+      type: ADD_WIDGET,
+      payload: [data],
+    });
+
+    dispatch({
+      type: ADD_WIDGET_INTO_MESSAGE,
+      messageId,
+      widgetId: data.id,
+    });
+  });
 };
 
 export const addYoutubeToMessage = (messageId, videoId) => {
@@ -102,3 +119,9 @@ export const fetchSharedMessage = (token) => (dispatch) => (
     ApiUrls.ShowSharedMessages.getUrl({ token }),
   )(dispatch)
 );
+
+export const removeWidgetFromMessage = (messageId, widgetId) => ({
+  type: REMOVE_WIDGET_FROM_MESSAGE,
+  messageId,
+  widgetId,
+});

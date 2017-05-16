@@ -1,5 +1,5 @@
 import { normalize } from 'normalizr';
-import { widget, ADD_WIDGET, UPDATE_WIDGET } from './types';
+import { widget, ADD_WIDGET, UPDATE_WIDGET, REMOVE_WIDGET } from './types';
 
 const defaultState = {
   byId: {},
@@ -77,6 +77,19 @@ const widgetsReducer = (state = defaultState, action) => {
             },
           },
         },
+      };
+    case REMOVE_WIDGET:
+      const widgetIndex = state.allIds.indexOf(action.id);
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.id]: undefined,
+        },
+        allIds: [
+          ...state.allIds.slice(0, widgetIndex),
+          ...state.allIds.slice(widgetIndex + 1),
+        ],
       };
     default:
       return state;

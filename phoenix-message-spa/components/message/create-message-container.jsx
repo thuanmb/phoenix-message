@@ -5,9 +5,11 @@ import Message from './message';
 import ShareMessagePopover from './share-message-popover';
 import {
   addTextToMessage,
+  addImageToMessage,
   fetchMessage,
   updateCurrentMessageId,
   publishMessage,
+  removeWidgetFromMessage,
 } from './message-actions';
 
 import './editor-style';
@@ -18,9 +20,11 @@ class CreateMessageContainer extends PureComponent {
     isLoading: PropTypes.bool,
     currentMessageId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     addTextToMessageDispatcher: PropTypes.func,
+    addImageToMessageDispatcher: PropTypes.func,
     fetchMessageDispatcher: PropTypes.func,
     updateCurrentMessageIdDispatcher: PropTypes.func,
     publishMessageDispatcher: PropTypes.func,
+    removeWidgetFromMessageDispatcher: PropTypes.func,
     params: PropTypes.object,
     sharedMessage: PropTypes.object,
     widgetList: PropTypes.object,
@@ -63,6 +67,12 @@ class CreateMessageContainer extends PureComponent {
     addTextToMessageDispatcher(currentMessageId, 'Some text for your message');
   }
 
+  handleAddNewImage() {
+    const { addImageToMessageDispatcher, currentMessageId } = this.props;
+
+    addImageToMessageDispatcher(currentMessageId, 'http://imageurl.com');
+  }
+
   handlePublishMessage() {
     const {
       publishMessageDispatcher,
@@ -74,6 +84,15 @@ class CreateMessageContainer extends PureComponent {
     this.setState({
       isSharingMessage: true,
     });
+  }
+
+  handleRemoveWidget(widgetId) {
+    const {
+      removeWidgetFromMessageDispatcher,
+      currentMessageId,
+    } = this.props;
+
+    removeWidgetFromMessageDispatcher(currentMessageId, widgetId);
   }
 
   render() {
@@ -90,6 +109,11 @@ class CreateMessageContainer extends PureComponent {
             <small>Add Text</small>
           </li>
 
+          <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.handleAddNewImage()}>
+            <i className="block material-icons">photo</i>
+            <small>Add Photo</small>
+          </li>
+
           <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.handlePublishMessage()}>
             <i className="block material-icons">share</i>
             <small>Share</small>
@@ -99,7 +123,7 @@ class CreateMessageContainer extends PureComponent {
         {isLoading ? (
           <Spinner />
         ) : (
-          <Message editing widgets={this.getWidgetList()} />
+          <Message editing widgets={this.getWidgetList()} onRemoveWidget={(id) => this.handleRemoveWidget(id)} />
         )}
 
         <ShareMessagePopover
@@ -145,7 +169,9 @@ const mapStateToProps = ({
 
 export default connect(mapStateToProps, {
   addTextToMessageDispatcher: addTextToMessage,
+  addImageToMessageDispatcher: addImageToMessage,
   fetchMessageDispatcher: fetchMessage,
   updateCurrentMessageIdDispatcher: updateCurrentMessageId,
   publishMessageDispatcher: publishMessage,
+  removeWidgetFromMessageDispatcher: removeWidgetFromMessage,
 })(CreateMessageContainer);

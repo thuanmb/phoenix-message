@@ -87,6 +87,14 @@ export const updateWidgetAjax = (widgetId, payload) => (
   })
 );
 
+export const removeWidgetAjax = (widgetId) => (
+  $.ajax({
+    url: ApiUrls.UpdateWidgets.getUrl({ id: widgetId }),
+    type: 'DELETE',
+    contentType: 'application/json',
+  })
+);
+
 export const createSharedMessage = (messageId) => (
   $.ajax({
     url: ApiUrls.SharedMessages,
