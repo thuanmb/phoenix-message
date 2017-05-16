@@ -19,6 +19,7 @@ class TextWidget extends Component {
     title: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
     inputType: PropTypes.string.isRequired,
+    styleName: PropTypes.string,
   };
 
   constructor() {
@@ -100,6 +101,7 @@ class TextWidget extends Component {
       title,
       placeholder,
       inputType,
+      styleName,
     } = this.props;
 
     const {
@@ -111,7 +113,7 @@ class TextWidget extends Component {
     return (
       <div>
         <div
-          className={allowEdit ? 'pointer' : ''}
+          className={`${styleName} ${allowEdit ? 'pointer' : ''}`}
           onClick={() => this.showEditForm()}
         >
           {children}

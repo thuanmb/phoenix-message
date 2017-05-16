@@ -17,6 +17,7 @@ import {
   DEFAULT_WIDGET,
   getCreateTextWidgetPayload,
   getCreateImageWidgetPayload,
+  getCreateYouTubeWidgetPayload,
 } from 'ReducersPath/widgets-reducer';
 
 export const updateCurrentMessageId = (messageId) => ({
@@ -97,8 +98,19 @@ export const addImageToMessage = (messageId, url) => (dispatch) => {
   });
 };
 
-export const addYoutubeToMessage = (messageId, videoId) => {
-  window.console.log(messageId, videoId);
+export const addYoutubeToMessage = (messageId, videoId) => (dispatch) => {
+  createWidget(messageId, getCreateYouTubeWidgetPayload(videoId)).done(({ data }) => {
+    dispatch({
+      type: ADD_WIDGET,
+      payload: [data],
+    });
+
+    dispatch({
+      type: ADD_WIDGET_INTO_MESSAGE,
+      messageId,
+      widgetId: data.id,
+    });
+  });
 };
 
 export const publishMessage = (messageId) => (dispatch) => {

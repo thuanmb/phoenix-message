@@ -6,6 +6,7 @@ import ShareMessagePopover from './share-message-popover';
 import {
   addTextToMessage,
   addImageToMessage,
+  addYoutubeToMessage,
   fetchMessage,
   updateCurrentMessageId,
   publishMessage,
@@ -21,6 +22,7 @@ class CreateMessageContainer extends PureComponent {
     currentMessageId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     addTextToMessageDispatcher: PropTypes.func,
     addImageToMessageDispatcher: PropTypes.func,
+    addYoutubeToMessageDispatcher: PropTypes.func,
     fetchMessageDispatcher: PropTypes.func,
     updateCurrentMessageIdDispatcher: PropTypes.func,
     publishMessageDispatcher: PropTypes.func,
@@ -73,6 +75,12 @@ class CreateMessageContainer extends PureComponent {
     addImageToMessageDispatcher(currentMessageId, 'http://imageurl.com');
   }
 
+  handleAddNewYoutube() {
+    const { addYoutubeToMessageDispatcher, currentMessageId } = this.props;
+
+    addYoutubeToMessageDispatcher(currentMessageId, 'QUwxKWT6m7U');
+  }
+
   handlePublishMessage() {
     const {
       publishMessageDispatcher,
@@ -112,6 +120,11 @@ class CreateMessageContainer extends PureComponent {
           <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.handleAddNewImage()}>
             <i className="block material-icons">photo</i>
             <small>Add Photo</small>
+          </li>
+
+          <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.handleAddNewYoutube()}>
+            <i className="block material-icons">ondemand_video</i>
+            <small>Add Youtube</small>
           </li>
 
           <li className="inline-block p-20 b-white-r min-w-120 btn-action" onClick={() => this.handlePublishMessage()}>
@@ -170,6 +183,7 @@ const mapStateToProps = ({
 export default connect(mapStateToProps, {
   addTextToMessageDispatcher: addTextToMessage,
   addImageToMessageDispatcher: addImageToMessage,
+  addYoutubeToMessageDispatcher: addYoutubeToMessage,
   fetchMessageDispatcher: fetchMessage,
   updateCurrentMessageIdDispatcher: updateCurrentMessageId,
   publishMessageDispatcher: publishMessage,

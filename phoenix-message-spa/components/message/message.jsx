@@ -2,6 +2,7 @@ import React, { PropTypes, PureComponent } from 'react';
 import './message-style';
 import TextWidget from '../widgets/text-widget';
 import ImageWidget from '../widgets/image-widget';
+import YouTubeWidget from '../widgets/youtube-widget';
 
 class Message extends PureComponent {
   static propTypes = {
@@ -50,9 +51,13 @@ class Message extends PureComponent {
               break;
             case 'youtube':
               widgetHtml = (
-                <div className="message__video-container m-t-20" key={`widget-${widget.type}-${widgetId}`}>
-                  <iframe className="full-screen" src={`https://www.youtube.com/embed/${payload.videoId}`} frameBorder="0" allowFullScreen />
-                </div>
+                <YouTubeWidget
+                  key={`widget-${widget.type}-${widgetId}`}
+                  widgetId={widgetId}
+                  videoId={payload.videoId}
+                  allowEdit={editing}
+                  onRemoveWidget={onRemoveWidget}
+                />
               );
               break;
             default:
