@@ -25,6 +25,9 @@ gem 'rails_admin', '~> 1.1.1'
 gem 'multi_json'
 gem 'faker'
 gem 'devise'
+gem 'carrierwave', '~> 1.0'
+gem 'fog-aws'
+gem 'figaro'
 
 group :development do
   gem 'better_errors'
